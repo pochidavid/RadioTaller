@@ -6,13 +6,16 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -22,10 +25,13 @@ import static lourdes8122.radiotaller.R.drawable.ic_play_circle_filled;
 
 public class EnVivoFragment extends Fragment {
 
+    public Chronometer crono;
+
     private MediaPlayer player;
     private String url = "http://giss.tv:8000/agenda.mp3";
     private Button btnStreaming;
     protected boolean isPlay = false;
+    private TextView radio;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +43,8 @@ public class EnVivoFragment extends Fragment {
         //Inicio el objeto MediaPlayer
         iniciarMediaPlayer();
         btnStreaming = rootView.findViewById(R.id.btn_reproductor);
+        radio = rootView.findViewById(R.id.textView5);
+        crono = rootView.findViewById(R.id.cronometro);
 
         btnStreaming.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +70,8 @@ public class EnVivoFragment extends Fragment {
             player.release();
             iniciarMediaPlayer();
             btnStreaming.setBackgroundResource(ic_play_circle_filled);
+            crono.stop();
+            radio.setText(R.string.radio_apagada);
         }
 
     }
@@ -79,6 +89,9 @@ public class EnVivoFragment extends Fragment {
                 public void onPrepared(MediaPlayer mp) {
                     player.start();
                     btnStreaming.setBackgroundResource(R.drawable.ic_stop);
+                    crono.setBase(SystemClock.elapsedRealtime());
+                    crono.start();
+                    radio.setText(R.string.radio_encendida);
                 }
             });
             player.prepareAsync();

@@ -48,11 +48,10 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
-    <TextView
-        android:id="@+id/textView6"
+    <Chronometer
+        android:id="@+id/cronometro"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:text="@string/_00_00_00"
+        android:layout_height="match_parent"
         android:textAlignment="center" />
 
     <android.support.constraint.ConstraintLayout
