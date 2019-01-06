@@ -1,6 +1,8 @@
 package lourdes8122.radiotaller;
 
+import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -8,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,7 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import static lourdes8122.radiotaller.R.drawable.ic_play_circle_filled;
+import static lourdes8122.radiotaller.R.drawable.ic_stop;
 
 
 public class EnVivoFragment extends Fragment {
@@ -28,7 +33,7 @@ public class EnVivoFragment extends Fragment {
     public Chronometer crono;
 
     private MediaPlayer player;
-    private String url = "http://giss.tv:8000/agenda.mp3";
+    private String url = "http://giss.tv:8000/santi.ogg";
     private Button btnStreaming;
     protected boolean isPlay = false;
     private TextView radio;
@@ -49,13 +54,20 @@ public class EnVivoFragment extends Fragment {
         btnStreaming.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isPlay = !isPlay;
+                Intent intent = new Intent(getContext(), MediaPlayerService.class );
+                if(!isPlay){
+                    //getActivity().startService(new Intent(getContext(), StreamingService.class));
 
-                if(isPlay){
+                    intent.setAction( MediaPlayerService.ACTION_PLAY );
+                    getActivity().startService(intent);
                     iniciarReproduccion();
+                    isPlay=true;
                 }else{
-
+                    //getActivity().stopService(new Intent(getContext(), StreamingService.class));
+                    intent.setAction(MediaPlayerService.ACTION_STOP);
+                    getActivity().stopService( intent );
                     pararReproduccion();
+                    isPlay=false;
                 }
             }
         });
@@ -65,42 +77,18 @@ public class EnVivoFragment extends Fragment {
     }
 
     private void pararReproduccion() {
-        if(player.isPlaying()){
-            player.stop();
-            player.release();
-            iniciarMediaPlayer();
             btnStreaming.setBackgroundResource(ic_play_circle_filled);
             crono.stop();
             radio.setText(R.string.radio_apagada);
-        }
 
     }
 
     private void iniciarReproduccion() {
+        crono.setBase(SystemClock.elapsedRealtime());
+        crono.start();
+        radio.setText(R.string.radio_encendida);
+        btnStreaming.setBackgroundResource(ic_stop);
 
-        try{
-            Toast.makeText(getContext(), "Conectando, por favor espere...", Toast.LENGTH_LONG).show();
-
-            player.reset();
-            player.setDataSource(url);
-            player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-
-            player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                public void onPrepared(MediaPlayer mp) {
-                    player.start();
-                    btnStreaming.setBackgroundResource(R.drawable.ic_stop);
-                    crono.setBase(SystemClock.elapsedRealtime());
-                    crono.start();
-                    radio.setText(R.string.radio_encendida);
-                }
-            });
-            player.prepareAsync();
-
-        } catch (IllegalArgumentException | SecurityException
-                | IllegalStateException | IOException e){
-            Toast.makeText(getContext(),"Streaming caido. Intente más tarde.", Toast.LENGTH_LONG).show();
-            btnStreaming.setBackgroundResource(ic_play_circle_filled);
-        }
     }
 
     private void iniciarMediaPlayer() {
@@ -112,6 +100,20 @@ public class EnVivoFragment extends Fragment {
                 Log.i("Buffering", ""+percent);
             }
         });
+
+    }
+
+    private void mostrarNotificacion(){
+        Notification Notificacion = new NotificationCompat.Builder(getActivity(), "CANAL01")
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.ic_radio_black_24dp)
+                .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
+                .setContentTitle("Estas escuchando Radio Taller")
+                .setContentText("105.3 Mhz 'Nuestra Señora de Lourdes")
+                .build();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        notificationManager.notify(1,Notificacion);
 
     }
 

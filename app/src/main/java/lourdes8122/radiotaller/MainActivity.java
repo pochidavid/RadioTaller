@@ -2,6 +2,7 @@ package lourdes8122.radiotaller;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.os.Build;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -42,6 +47,9 @@ public class MainActivity extends AppCompatActivity
                 .beginTransaction()
                 .replace(R.id.contenedor, fragmentInicio)
                 .commit();
+
+        createNotificationChannel();
+
 
     }
 
@@ -98,9 +106,26 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    private void createNotificationChannel() {
+        // Crear el canal de notificaciones pero solo para API 26 io superior
+        // dado que NotificationChannel es una clase nueva que no está incluida // en las librerías de soporte qeu brindan compatibilidad hacía atrás
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.canal_estado_nombre);
+            String description = getString(R.string.canal_estado_descr);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CANAL01", name, importance);
+            channel.setDescription(description);
+            // Registrar el canal en el sistema
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
 }
