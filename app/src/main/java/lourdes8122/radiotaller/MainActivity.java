@@ -26,6 +26,9 @@ import android.os.Build;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String BUFFERING = "Esta cargando";
+    public static final String UPDATE_PLAYER = "Esta actualizando";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
