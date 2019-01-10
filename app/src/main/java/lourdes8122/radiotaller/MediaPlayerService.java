@@ -4,6 +4,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -309,11 +311,14 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      */
     private void buildNotification(boolean startForeground) {
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);
+        Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_logoradio);
+
         intent.setAction(ACTION_CLOSE);
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes").setContentText("Streaming En Vivo")
                 .setSmallIcon(R.drawable.ic_radio_black_24dp).setOngoing(true)
+                .setLargeIcon(largeIcon)
                 .setContentIntent(getMainContentIntent())
                 .setDeleteIntent(pendingIntent);
         if (mState == State.Paused || mState == State.Stopped) {
