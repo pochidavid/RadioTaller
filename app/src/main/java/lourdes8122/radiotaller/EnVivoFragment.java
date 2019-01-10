@@ -43,7 +43,7 @@ public class EnVivoFragment extends Fragment {
     private String url = "http://giss.tv:8000/santi.ogg";
     private ToggleButton btnStreaming;
     private TextView radio;
-    private Chronometer crono;
+    //private Chronometer crono;
 
 
 
@@ -70,7 +70,8 @@ public class EnVivoFragment extends Fragment {
         iniciarMediaPlayer();
         btnStreaming = rootView.findViewById(R.id.play_pause_button);
         radio = rootView.findViewById(R.id.media_player_title);
-        crono = rootView.findViewById(R.id.cronometro);
+        //crono = rootView.findViewById(R.id.cronometro);
+
 
         btnStreaming.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,13 +148,13 @@ public class EnVivoFragment extends Fragment {
         //The media player might have been buffering so set the buffering view to gone.
 
         if (mainService.isPlaying()) {
-            crono.setBase(SystemClock.elapsedRealtime());
-            crono.start();
+            //crono.setBase(SystemClock.elapsedRealtime());
+            //crono.start();
             radio.setText(R.string.radio_encendida);
             btnStreaming.setChecked(sGetMainService.getMainService().isPlaying());
 
         } else {
-            crono.stop();
+            //crono.stop();
             radio.setText(R.string.radio_apagada);
             btnStreaming.setChecked(false);
 

@@ -1,5 +1,6 @@
 package lourdes8122.radiotaller;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -17,7 +18,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
+
 
 import java.io.IOException;
 
@@ -312,21 +313,25 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private void buildNotification(boolean startForeground) {
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_logoradio);
+        Notification.MediaStyle style = new Notification.MediaStyle();
 
         intent.setAction(ACTION_CLOSE);
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes").setContentText("Streaming En Vivo")
+        Notification.Builder builder = new Notification.Builder(this)
+                .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes'").setContentText("Streaming En Vivo")
                 .setSmallIcon(R.drawable.ic_radio_black_24dp).setOngoing(true)
                 .setLargeIcon(largeIcon)
                 .setContentIntent(getMainContentIntent())
-                .setDeleteIntent(pendingIntent);
+                .setDeleteIntent(pendingIntent)
+                .setStyle(style);
         if (mState == State.Paused || mState == State.Stopped) {
             builder.addAction(generateAction(android.R.drawable.ic_media_play, "Play", ACTION_PLAY));
         } else {
             builder.addAction(generateAction(android.R.drawable.ic_media_pause, "Pause", ACTION_PAUSE));
         }
         builder.addAction(generateAction(android.R.drawable.ic_menu_close_clear_cancel, "Close", ACTION_CLOSE));
+
+
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
         if (startForeground)
@@ -338,13 +343,15 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private PendingIntent getMainContentIntent() {
         Intent resultIntent = new Intent(this, MainActivity.class);
         return PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
     }
 
-    private NotificationCompat.Action generateAction(int icon, String title, String intentAction) {
+    private Notification.Action generateAction(int icon, String title, String intentAction) {
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);
         intent.setAction(intentAction);
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
-        return new NotificationCompat.Action.Builder(icon, title, pendingIntent).build();
+        return new Notification.Action.Builder(icon, title, pendingIntent).build();
     }
 
     @Override
