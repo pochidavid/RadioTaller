@@ -2,17 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center">
     tools:context=".EnVivoFragment">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="65dp" />
 
     <TextView
         android:id="@+id/TextView1"
@@ -40,35 +36,33 @@
         android:contentDescription="@string/todo"
         android:src="@drawable/logoradio" />
 
+
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/media_player_title"
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:text="@string/radio_apagada"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        tools:layout_editor_absoluteY="181dp" />
 
     <Chronometer
         android:id="@+id/cronometro"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textAlignment="center" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
+    <ToggleButton
+        android:id="@+id/play_pause_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/play_pause"
+        android:checked="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textOff=""
+        android:textOn=""
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="185dp" />
 
-        <Button
-            android:id="@+id/btn_reproductor"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:background="@drawable/ic_play_circle_filled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

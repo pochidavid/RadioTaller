@@ -25,5 +25,7 @@
     <string name="acerca_de">Acerca de</string>
     <string name="canal_estado_nombre">Canal1</string>
     <string name="canal_estado_descr">Canal1</string>
+    <string name="buffering">Buffering…</string>
+
 
 </resources>

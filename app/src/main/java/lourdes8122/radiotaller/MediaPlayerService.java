@@ -1,19 +1,11 @@
 package lourdes8122.radiotaller;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.Rating;
-import android.media.session.MediaController;
-import android.media.session.MediaSession;
-import android.media.session.MediaSessionManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
@@ -27,18 +19,21 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+
+
+
 /**
- * Created by paulruiz on 10/28/14.
+ * Service that controls the media player and the notification that represents it.
  */
 public class MediaPlayerService extends Service implements AudioManager.OnAudioFocusChangeListener,
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnInfoListener {
     private static final String TAG = MediaPlayerService.class.getSimpleName();
 
-    private final IBinder mMediaPlayerBinder = (IBinder) new MediaPlayerBinder();
-    public static final String ACTION_PLAY = "creek.fm.doublea.kzfr.services.PLAY";
-    public static final String ACTION_PAUSE = "creek.fm.doublea.kzfr.services.PAUSE";
-    public static final String ACTION_CLOSE = "creek.fm.doublea.kzfr.services.APP_CLOSE";
-    public static final String ACTION_CLOSE_IF_PAUSED = "creek.fm.doublea.kzfr.services.APP_CLOSE_IF_PAUSED";
+    private final IBinder mMediaPlayerBinder = new MediaPlayerBinder();
+    public static final String ACTION_PLAY = "lourdes8122.radiotaller.PLAY";
+    public static final String ACTION_PAUSE = "lourdes8122.radiotaller.PAUSE";
+    private static final String ACTION_CLOSE = "lourdes8122.radiotaller.APP_CLOSE";
+    public static final String ACTION_CLOSE_IF_PAUSED = "lourdes8122.radiotaller.APP_CLOSE_IF_PAUSED";
     private static final int NOTIFICATION_ID = 4223;
     private MediaPlayer mMediaPlayer = null;
     private AudioManager mAudioManager = null;
@@ -47,7 +42,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private static final String mStreamUrl = "http://stream-tx1.radioparadise.com:8090/;stream/1";
 
     //Wifi Lock to ensure the wifo does not ge to sleep while we are stearming music.
-    //private WifiManager.WifiLock mWifiLock;
+    private WifiManager.WifiLock mWifiLock;
 
     enum State {
         Retrieving, // the MediaRetriever is retrieving music
@@ -128,12 +123,12 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
         }
     }
 
-    /*private void setupWifiLock() {
+    private void setupWifiLock() {
         if (mWifiLock == null) {
             mWifiLock = ((WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE))
                     .createWifiLock(WifiManager.WIFI_MODE_FULL, "mediaplayerlock");
         }
-    }*/
+    }
 
     private void setupMediaPlayer() {
         if (mMediaPlayer == null) {
@@ -144,6 +139,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
             mMediaPlayer.setOnInfoListener(this);
             mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
             try {
                 mMediaPlayer.setDataSource(this, Uri.parse(mStreamUrl));
             } catch (IOException e) {
@@ -229,7 +225,6 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      */
     private void startMediaPlayer() {
         if (mMediaPlayer != null) {
-            Toast.makeText(getApplicationContext(),"Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG);
             mMediaPlayer.start();
             sendUpdatePlayerIntent();
             mState = State.Playeng;
@@ -248,8 +243,8 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      */
     private void requestResources() {
         setupAudioManager();
-        //setupWifiLock();
-        //mWifiLock.acquire();
+        setupWifiLock();
+        mWifiLock.acquire();
 
         tryToGetAudioFocus();
     }
@@ -313,14 +308,12 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      * just update the notification.
      */
     private void buildNotification(boolean startForeground) {
-        Bitmap largelogo = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_logoradio);
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);
         intent.setAction(ACTION_CLOSE);
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                .setContentTitle("Radio Taller").setContentText("Nuestra Señora de Lourdes")
+                .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes").setContentText("Streaming En Vivo")
                 .setSmallIcon(R.drawable.ic_radio_black_24dp).setOngoing(true)
-                .setLargeIcon(largelogo)
                 .setContentIntent(getMainContentIntent())
                 .setDeleteIntent(pendingIntent);
         if (mState == State.Paused || mState == State.Stopped) {
@@ -368,9 +361,9 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private void relaxResources() {
 
         //Release the WifiLock resource
-        //if (mWifiLock != null && mWifiLock.isHeld()) {
-          //  mWifiLock.release();
-        //}
+        if (mWifiLock != null && mWifiLock.isHeld()) {
+            mWifiLock.release();
+        }
 
 
         // stop service from being a foreground service. Passing true removes the notification as well.
