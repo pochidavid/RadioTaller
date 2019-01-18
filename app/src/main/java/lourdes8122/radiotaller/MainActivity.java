@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     public static final String UPDATE_PLAYER = "lourdes8122.radiotaller.MainActivity.UPDATE_PLAYER";
     public static final String BUFFERING = TAG + ".buffering_player";
     public EnVivoFragment fragmentInicio;
+    public ProgramacionFragment fragmentProgramacion;
 
     private boolean mBound;
 
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fragmentProgramacion = new ProgramacionFragment();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -163,8 +166,15 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.envivo) {
             // Handle the camera action
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor,fragmentInicio)
+                    .commit();
         } else if (id == R.id.programacion) {
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor,fragmentProgramacion)
+                    .commit();
         } else if (id == R.id.youtube) {
 
         } else if (id == R.id.web) {
