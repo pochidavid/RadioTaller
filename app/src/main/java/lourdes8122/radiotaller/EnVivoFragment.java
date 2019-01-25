@@ -2,33 +2,20 @@ package lourdes8122.radiotaller;
 
 import android.app.Activity;
 import android.app.Notification;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+
+import androidx.fragment.app.Fragment;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import java.io.IOException;
-
-import static lourdes8122.radiotaller.R.drawable.ic_play_circle_filled;
-import static lourdes8122.radiotaller.R.drawable.ic_stop;
 
 
 public class EnVivoFragment extends Fragment {
@@ -129,7 +116,7 @@ public class EnVivoFragment extends Fragment {
         Notification Notificacion = new NotificationCompat.Builder(getActivity(), "CANAL01")
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setSmallIcon(R.drawable.ic_radio_black_24dp)
-                .setStyle(new android.support.v4.media.app.NotificationCompat.MediaStyle())
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle())
                 .setContentTitle("Estas escuchando Radio Taller")
                 .setContentText("105.3 Mhz 'Nuestra Señora de Lourdes")
                 .build();

@@ -2,15 +2,13 @@ package lourdes8122.radiotaller;
 
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.IBinder;
-import android.support.v4.app.NotificationManagerCompat;
+
+import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class NotificationsService extends com.google.firebase.messaging.FirebaseMessagingService {
@@ -55,8 +53,10 @@ public class NotificationsService extends com.google.firebase.messaging.Firebase
 
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 2, intent, 0);
         Notification.Builder builder = new Notification.Builder(this)
-                .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes'").setContentText("Streaming En Vivo")
-                .setSmallIcon(R.drawable.ic_radio_black_24dp).setOngoing(true)
+                .setDefaults(Notification.DEFAULT_SOUND)
+                .setContentTitle(remoteMessage.getNotification().getTitle())
+                .setContentText(remoteMessage.getNotification().getBody())
+                .setSmallIcon(R.drawable.ic_radio_black_24dp)
                 .setLargeIcon(largeIcon)
                 .setContentIntent(getMainContentIntent())
                 .setDeleteIntent(pendingIntent);
