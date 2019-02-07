@@ -27,5 +27,17 @@
     <string name="canal_estado_descr">Canal1</string>
     <string name="buffering">Buffering…</string>
 
+    <string name="btn_perfil_usuario">Perfil de Usuario</string>
+    <string name="label_nombre">Nombre</string>
+    <string name="label_apellido">Apellido</string>
+    <string name="label_nacimiento">Fecha de Nacimiento: AAAA/MM/DD</string>
+    <string name="label_pais">Pais</string>
+    <string name="label_ciudad">Ciudad </string>
+    <string name="label_provincia">Provincia </string>
+    <string name="label_email">Email </string>
+    <string name="btn_guardar">Guardar</string>
+
+    <string name="btn_apariencia">Apariencia</string>
+
 
 </resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ConfiguracionFragment">
+
+
+
+
+    <Button
+        android:id="@+id/perfil_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_perfil_usuario" />
+
+    <Button
+        android:id="@+id/apariencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_apariencia" />
+
+
+
+</LinearLayout>

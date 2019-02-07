@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     public static final String BUFFERING = TAG + ".buffering_player";
     public EnVivoFragment fragmentInicio;
     public ProgramacionFragment fragmentProgramacion;
+    public ConfiguracionFragment fragmentConfiguracion;
 
     private boolean mBound;
 
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         fragmentProgramacion = new ProgramacionFragment();
+        fragmentConfiguracion = new ConfiguracionFragment();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -174,7 +176,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.comentarios) {
 
         } else if (id == R.id.config) {
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor,fragmentConfiguracion)
+                    .commit();
         }
 
 

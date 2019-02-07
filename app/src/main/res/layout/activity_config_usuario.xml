@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ConfigUsuarioActivity">
+
+    <EditText
+        android:id="@+id/nombre_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_nombre"
+        android:inputType="text" />
+
+
+    <EditText
+        android:id="@+id/apellido_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_apellido"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/nacimiento_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_nacimiento"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/pais_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_pais"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/ciudad_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_ciudad"
+        android:inputType="text" />
+
+
+    <EditText
+        android:id="@+id/provincia_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_provincia"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/email_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_email"
+        android:inputType="textEmailAddress" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_volver_usuario"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:text="Volver" />
+
+        <Button
+            android:id="@+id/button_guardar_usuario"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:text="Guardar" />
+</LinearLayout>
+
+
+</LinearLayout>
