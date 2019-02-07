@@ -13,6 +13,4 @@ public interface ProgramacionService {
     @GET("horarios")
     Call<List<Programa>> getHorarios();
 
-    @GET("usuario")
-    Call<Usuario> getUsuario(int id);
 }
