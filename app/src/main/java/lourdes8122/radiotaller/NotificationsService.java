@@ -5,11 +5,11 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
-import androidx.core.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
+
+import androidx.core.app.NotificationManagerCompat;
 
 public class NotificationsService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMessage";

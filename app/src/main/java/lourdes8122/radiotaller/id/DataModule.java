@@ -4,7 +4,6 @@ import android.app.Application;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import javax.inject.Singleton;
 
@@ -24,7 +23,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class DataModule {
 
-    private static final String BASE_URL = "https://49f1f420-26be-4d7b-898f-7ea54d1f1419.mock.pstmn.io";
+    private static final String BASE_URL = "https://e8bb8611-616f-4699-a7c7-b22ffce0d91e.mock.pstmn.io";
+    //private static final String BASE_URL = "http://10.0.2.2:4000/";
     private static final String DB_NAME = "radio-taller-DB";
 
     Application application;

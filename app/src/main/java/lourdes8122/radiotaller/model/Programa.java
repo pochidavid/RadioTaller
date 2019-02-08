@@ -2,14 +2,12 @@ package lourdes8122.radiotaller.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PropertyResourceBundle;
 
-import androidx.room.Embedded;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.Relation;
-import lourdes8122.radiotaller.model.Horario;
 
 @Entity(tableName = "programas")
 public class Programa {
@@ -18,6 +16,9 @@ public class Programa {
     private int id;
     private String nombre;
     private Boolean activo;
+
+    @Ignore
+    transient private List<Horario> horarios = new ArrayList<>();
 
     @Ignore
     public Programa(String nombre){
@@ -59,5 +60,28 @@ public class Programa {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    @Ignore
+    public List<Horario> getHorarios() {
+        return horarios;
+    }
+
+    public void setHorarios(@Nullable List<Horario> horarios) {
+        this.horarios = horarios == null? new ArrayList<>() : horarios;
+    }
+
+    public void addHorario(@Nullable Horario h){
+        if(h != null) horarios.add(h);
+    }
+
+    public void addHorarios(@Nullable List<Horario> horarios){
+        if(horarios != null) horarios.addAll(horarios);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "("+id+") Programa: "+nombre+", Activo: "+activo;
     }
 }

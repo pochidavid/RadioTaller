@@ -1,14 +1,13 @@
 package lourdes8122.radiotaller;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
-import lourdes8122.radiotaller.repository.AppRepository;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 import lourdes8122.radiotaller.model.Programa;
+import lourdes8122.radiotaller.repository.AppRepository;
 
 public class ProgramacionViewModel extends ViewModel {
     private LiveData<List<Programa>> programas;
@@ -25,10 +24,15 @@ public class ProgramacionViewModel extends ViewModel {
 
             return;
         }
-        programas = appRepo.getProgramas();
+
+        loadProgramasFromRepo();
     }
 
     public LiveData<List<Programa>> getProgramas() {
         return programas;
+    }
+
+    private void loadProgramasFromRepo(){
+        programas = appRepo.getProgramas();
     }
 }

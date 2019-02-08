@@ -1,28 +1,27 @@
 package lourdes8122.radiotaller;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.appcompat.app.AlertDialog;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Build;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, EnVivoFragment.GetMainService {
@@ -69,6 +68,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private void updateMediaPlayerToggle() {
+        //TODO: Arreglar exception - ProgramacionFragment cannot be cast to lourdes8122.radiotaller.EnVivoFragment
         EnVivoFragment nowPlayingFragment = (EnVivoFragment) getSupportFragmentManager().findFragmentById(R.id.contenedor);
 
         if (nowPlayingFragment != null) {
