@@ -27,7 +27,7 @@ public class RadioTallerApplication extends Application {
 
     private void initDataComponent() {
         dataComponent = DaggerDataComponent.builder()
-                .dataModule(new DataModule(this))
+               .dataModule(new DataModule(this))
                 .build();
     }
 

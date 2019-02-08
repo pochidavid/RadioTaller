@@ -37,9 +37,13 @@ public class DataModule {
     public AppRepository provideAppRepository(ProgramacionService programacionService,
                                               ProgramacionDao programacionDao,
                                               SubscripcionesDao subscripcionesDao,
-                                              Executor executor){
+                                              Executor executor
+            //, UsuarioDao usuarioDao
+    ){
 
-        return new AppRepository(programacionService,programacionDao,subscripcionesDao,executor);
+        return new AppRepository(programacionService,programacionDao,subscripcionesDao,executor
+               // , usuarioDao
+        );
     }
 
     @Provides
@@ -87,4 +91,9 @@ public class DataModule {
     public Executor provideExecutor(){
         return Executors.newSingleThreadExecutor();
     }
+
+    //@Provides
+    //public UsuarioDao provideUsuarionDao(AppDatabase appDatabase){
+    //    return appDatabase.usuarioDao();
+    //}
 }

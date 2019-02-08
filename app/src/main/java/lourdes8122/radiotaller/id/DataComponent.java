@@ -3,6 +3,7 @@ package lourdes8122.radiotaller.id;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import lourdes8122.radiotaller.ConfiguracionFragment;
 import lourdes8122.radiotaller.ProgramacionFragment;
 import lourdes8122.radiotaller.ProgramacionViewModel;
 import lourdes8122.radiotaller.RadioTallerApplication;
@@ -19,4 +20,6 @@ public interface DataComponent {
     void inject(ProgramacionViewModel programacionViewModel);
 
     void inject(ProgramacionFragment programacionFragment);
+
+    void inject(ConfiguracionFragment configuracionFragment);
 }

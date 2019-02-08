@@ -61,8 +61,8 @@ public class EnVivoFragment extends Fragment {
 
 
         btnStreaming.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MediaPlayerService.class);
                 if(btnStreaming.isChecked()){
                     //getActivity().startService(new Intent(getContext(), StreamingService.class));
