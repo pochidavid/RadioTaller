@@ -89,7 +89,7 @@ public class DataModule {
 
     @Provides
     public Executor provideExecutor(){
-        return Executors.newSingleThreadExecutor();
+        return Executors.newCachedThreadPool();
     }
 
     //@Provides

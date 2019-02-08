@@ -64,7 +64,7 @@ public class Programa {
 
     @Ignore
     public List<Horario> getHorarios() {
-        return horarios;
+        return horarios == null? new ArrayList<>() : horarios;
     }
 
     public void setHorarios(@Nullable List<Horario> horarios) {

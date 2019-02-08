@@ -1,11 +1,15 @@
 package lourdes8122.radiotaller.repository;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletionService;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorCompletionService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -48,8 +52,13 @@ public class AppRepository {
                 System.out.println(response.body());
                 List<Programa> programas = response.body();
 
+                //Busca los horarios y espera a que se complete la tarea
+                CompletionService<String> service
+                        = new ExecutorCompletionService<>(executor);
                 for(Programa p: programas){
-                    executor.execute(new Runnable() {
+
+                    service.submit(
+                    new Runnable() {
                         @Override
                         public void run() {
                             try {
@@ -60,7 +69,12 @@ public class AppRepository {
                                 e.printStackTrace();
                             }
                         }
-                    });
+                    },"Horarios Cargados");
+                    try {
+                        if(service.take().isDone()) Log.v("Radio Repository","Horarios Cargados \n"+p.getHorarios());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 data.setValue(programas);
             }
