@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -170,7 +171,9 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.contenedor,fragmentProgramacion)
                     .commit();
         } else if (id == R.id.youtube) {
-
+            Uri uri = Uri.parse("https://www.youtube.com/channel/UCr_tYBYP-1j4DFx1s2ksVVg");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         } else if (id == R.id.web) {
 
         } else if (id == R.id.comentarios) {
