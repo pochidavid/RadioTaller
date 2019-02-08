@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     public EnVivoFragment fragmentInicio;
     public ProgramacionFragment fragmentProgramacion;
     public ConfiguracionFragment fragmentConfiguracion;
+    public WebFragment fragmentWeb;
 
     private boolean mBound;
 
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         fragmentProgramacion = new ProgramacionFragment();
         fragmentConfiguracion = new ConfiguracionFragment();
+        fragmentWeb = new WebFragment();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -123,10 +126,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        WebView webView = (WebView) findViewById(R.id.web);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        } else if (!webView.equals(null) && webView.canGoBack()) {
+                     webView.goBack();
+                }else {
+                    super.onBackPressed();
         }
     }
 
@@ -175,7 +181,10 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         } else if (id == R.id.web) {
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor, fragmentWeb)
+                    .commit();
         } else if (id == R.id.comentarios) {
 
         } else if (id == R.id.config) {
