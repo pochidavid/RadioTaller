@@ -67,6 +67,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation files('libs/mail.jar')
+    implementation 'com.shamanland:xdroid-toaster:0.0.5'
 
 }
 

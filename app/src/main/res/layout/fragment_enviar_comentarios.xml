@@ -13,21 +13,49 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="75dp" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prueba de email" />
+            android:text="@string/enviar_comentarios"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-        <EditText
-            android:id="@+id/textComentario"
+        <TextView
+            android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/usted_esta_por_enviar_comentarios_como" />
+
+        <TextView
+            android:id="@+id/textNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_hay_usuario_registrado"
+            android:textStyle="italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Escriba su comentario:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Escribir Comentario" />
+            android:inputType="textMultiLine"
+            android:typeface="normal"
+            android:gravity="top"/>
 
         <Button
             android:id="@+id/btnEnviar"

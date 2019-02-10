@@ -61,7 +61,7 @@ public class EnviarMail {
             if(session!=null){
                 javax.mail.Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(direccionCorreo));
-                message.setSubject("Prueba mail");
+                message.setSubject(subject);
                 message.setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(destintatarioCorreo));
                 message.setContent(content,"text/html; charset=utf-8");
                 Transport.send(message);
@@ -86,6 +86,7 @@ public class EnviarMail {
 
         */
         // Mostramos que el mensaje se ha enviado correctamente
+        System.out.println(content);
         System.out.println("--------------------------");
         System.out.println("Mensaje enviado");
         System.out.println("---------------------------");

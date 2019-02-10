@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         WebView webView = (WebView) findViewById(R.id.web);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (!webView.equals(null) && webView.canGoBack()) {
+        } else if (webView != null && webView.canGoBack()) {
                      webView.goBack();
                 }else {
                     super.onBackPressed();
