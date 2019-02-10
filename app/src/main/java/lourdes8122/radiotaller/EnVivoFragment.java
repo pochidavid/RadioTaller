@@ -66,7 +66,7 @@ public class EnVivoFragment extends Fragment {
                 Intent intent = new Intent(getContext(), MediaPlayerService.class);
                 if(btnStreaming.isChecked()){
                     //getActivity().startService(new Intent(getContext(), StreamingService.class));
-                    Toast.makeText(getContext(), "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(), "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG).show();
                     intent.setAction(MediaPlayerService.ACTION_PLAY);
                     //iniciarReproduccion();
                     //isPlay = true;

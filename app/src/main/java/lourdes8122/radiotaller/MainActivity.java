@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     public ProgramacionFragment fragmentProgramacion;
     public ConfiguracionFragment fragmentConfiguracion;
     public WebFragment fragmentWeb;
+    public EnviarComentariosFragment fragmentEnviarComentario;
 
     private boolean mBound;
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity
         fragmentProgramacion = new ProgramacionFragment();
         fragmentConfiguracion = new ConfiguracionFragment();
         fragmentWeb = new WebFragment();
+        fragmentEnviarComentario = new EnviarComentariosFragment();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -186,7 +188,10 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.contenedor, fragmentWeb)
                     .commit();
         } else if (id == R.id.comentarios) {
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor, fragmentEnviarComentario)
+                    .commit();
         } else if (id == R.id.config) {
             getSupportFragmentManager()
                     .beginTransaction()
