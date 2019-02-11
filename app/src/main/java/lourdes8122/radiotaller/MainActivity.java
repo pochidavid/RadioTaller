@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
     public ConfiguracionFragment fragmentConfiguracion;
     public WebFragment fragmentWeb;
     public EnviarComentariosFragment fragmentEnviarComentario;
+    public Boolean actualizarBtnToogle;
 
     private boolean mBound;
 
@@ -74,10 +75,13 @@ public class MainActivity extends AppCompatActivity
 
     private void updateMediaPlayerToggle() {
         //TODO: Arreglar exception - ProgramacionFragment cannot be cast to lourdes8122.radiotaller.EnVivoFragment
-        EnVivoFragment nowPlayingFragment = (EnVivoFragment) getSupportFragmentManager().findFragmentById(R.id.contenedor);
+        if(getSupportFragmentManager().findFragmentById(R.id.contenedor)==fragmentInicio) {
+            actualizarBtnToogle = true;
+            EnVivoFragment nowPlayingFragment = (EnVivoFragment) getSupportFragmentManager().findFragmentById(R.id.contenedor);
 
-        if (nowPlayingFragment != null) {
-            nowPlayingFragment.updateToggle();
+            if (nowPlayingFragment != null) {
+                nowPlayingFragment.updateToggle();
+            }
         }
     }
 
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        actualizarBtnToogle = false;
 
         fragmentProgramacion = new ProgramacionFragment();
         fragmentConfiguracion = new ConfiguracionFragment();
@@ -168,11 +174,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.envivo) {
-            // Handle the camera action
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.contenedor,fragmentInicio)
+                    .replace(R.id.contenedor, fragmentInicio)
                     .commit();
+
         } else if (id == R.id.programacion) {
             getSupportFragmentManager()
                     .beginTransaction()

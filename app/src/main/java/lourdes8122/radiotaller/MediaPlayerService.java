@@ -15,6 +15,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -278,6 +279,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
 
     private void processPlayRequest() {
         if (mState == State.Stopped) {
+            Toast.makeText(this, "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG).show();
             sendBufferingIntent();
             configAndPrepareMediaPlayer();
         } else if (mState == State.Paused) {
