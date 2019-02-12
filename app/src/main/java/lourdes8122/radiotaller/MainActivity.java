@@ -14,7 +14,9 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private MediaPlayerService mNowPlayingService;
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String IR_CONFIGURAR = "lourdes8122.radiotaller.MainActivity.IR_CONFIGURAR";
     public static final String UPDATE_PLAYER = "lourdes8122.radiotaller.MainActivity.UPDATE_PLAYER";
     public static final String BUFFERING = TAG + ".buffering_player";
     public EnVivoFragment fragmentInicio;
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity
     public WebFragment fragmentWeb;
     public EnviarComentariosFragment fragmentEnviarComentario;
     public Boolean actualizarBtnToogle;
+
+    Button modificarUsuario;
 
     private boolean mBound;
 
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity
             } else if (intent.getAction().equals(BUFFERING)) {
                 showMediaPlayerBuffering();
             }
+
+
         }
     };
 
@@ -101,6 +108,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         actualizarBtnToogle = false;
+
+
 
         fragmentProgramacion = new ProgramacionFragment();
         fragmentConfiguracion = new ConfiguracionFragment();
@@ -198,6 +207,7 @@ public class MainActivity extends AppCompatActivity
                     .beginTransaction()
                     .replace(R.id.contenedor, fragmentEnviarComentario)
                     .commit();
+
         } else if (id == R.id.config) {
             getSupportFragmentManager()
                     .beginTransaction()

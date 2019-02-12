@@ -1,16 +1,19 @@
 package lourdes8122.radiotaller;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import lourdes8122.radiotaller.repository.EnviarMail;
 import xdroid.toaster.Toaster;
 
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +36,8 @@ import javax.mail.MessagingException;
 public class EnviarComentariosFragment extends Fragment {
 
     Button btnEnviar;
+    Button modificarUsuario;
+    public ConfiguracionFragment fragmentConfiguracion;
     EditText comentarios;
     TextView nombre;
 
@@ -67,8 +72,31 @@ public class EnviarComentariosFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_enviar_comentarios, container, false);
 
         btnEnviar = (Button) rootView.findViewById(R.id.btnEnviar);
+
         comentarios = (EditText) rootView.findViewById(R.id.editText);
         final Boolean[] envio = {true};
+
+        fragmentConfiguracion = new ConfiguracionFragment();
+
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(container.getContext());
+
+        modificarUsuario = rootView.findViewById(R.id.btnModificar);
+        modificarUsuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.contenedor,fragmentConfiguracion)
+                        .commit();
+            }
+        });
+
+        if(myPreferences.getString("NOMBRE","null")=="null" || myPreferences.getString("APELLIDO","null")=="null" && myPreferences.getString("EMAIL","null")=="null"){
+            comentarios.setEnabled(false);
+            btnEnviar.setEnabled(false);
+        }
+
+
 
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +138,7 @@ public class EnviarComentariosFragment extends Fragment {
 
         nombre = (TextView) rootView.findViewById(R.id.textNombre);
 
-        myPreferences = PreferenceManager.getDefaultSharedPreferences(container.getContext());
+
         nombre.setText(myPreferences.getString("NOMBRE", "No hay usuario registrado"));
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,18 +24,47 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-        <TextView
-            android:id="@+id/textView5"
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/usted_esta_por_enviar_comentarios_como" />
+            android:layout_height="10dp" />
 
-        <TextView
-            android:id="@+id/textNombre"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_hay_usuario_registrado"
-            android:textStyle="italic" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/usted_esta_por_enviar_comentarios_como"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/textNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_hay_usuario_registrado"
+                    android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="10dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/btnModificar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Modificar" />
+
+        </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
@@ -53,15 +83,18 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:ems="10"
+            android:gravity="top"
             android:inputType="textMultiLine"
-            android:typeface="normal"
-            android:gravity="top"/>
+            android:typeface="normal" />
 
         <Button
             android:id="@+id/btnEnviar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviar" />
+            android:text="Enviar"
+            android:textAlignment="center"
+            tools:layout_editor_absoluteY="371dp" />
+
     </LinearLayout>
 
 </FrameLayout>
