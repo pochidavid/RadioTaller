@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">En Vivo</string>
+    <string name="app_name">Radio Taller</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,6 +20,27 @@
     <string name="configuraci_n">Configuración</string>
     <string name="todo">TODO</string>
     <string name="radio_apagada">Radio Apagada</string>
+    <string name="radio_encendida">En el Aire</string>
     <string name="_00_00_00">00:00:00</string>
     <string name="acerca_de">Acerca de</string>
+    <string name="canal_estado_nombre">Canal1</string>
+    <string name="canal_estado_descr">Canal1</string>
+    <string name="buffering">Buffering…</string>
+
+    <string name="btn_perfil_usuario">Perfil de Usuario</string>
+    <string name="label_nombre">Nombre</string>
+    <string name="label_apellido">Apellido</string>
+    <string name="label_nacimiento">Fecha de Nacimiento: AAAA/MM/DD</string>
+    <string name="label_pais">Pais</string>
+    <string name="label_ciudad">Ciudad </string>
+    <string name="label_provincia">Provincia </string>
+    <string name="label_email">Email </string>
+    <string name="btn_guardar">Guardar</string>
+
+    <string name="btn_apariencia">Apariencia</string>
+    <string name="no_hay_usuario_registrado">No hay usuario registrado</string>
+    <string name="usted_esta_por_enviar_comentarios_como">Usted esta por enviar comentarios como:</string>
+
+
+
 </resources>
