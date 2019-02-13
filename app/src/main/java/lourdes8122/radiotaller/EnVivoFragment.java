@@ -66,7 +66,6 @@ public class EnVivoFragment extends Fragment {
                 Intent intent = new Intent(getContext(), MediaPlayerService.class);
                 if(btnStreaming.isChecked()){
                     //getActivity().startService(new Intent(getContext(), StreamingService.class));
-                    Toast.makeText(getContext(), "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG);
                     intent.setAction(MediaPlayerService.ACTION_PLAY);
                     //iniciarReproduccion();
                     //isPlay = true;
@@ -79,7 +78,9 @@ public class EnVivoFragment extends Fragment {
                 getActivity().startService(intent);
             }
         });
-
+        MediaPlayerService mainService = sGetMainService.getMainService();
+        if(mainService!=null)
+            updateToggle();
 
         return rootView;
 
@@ -138,13 +139,11 @@ public class EnVivoFragment extends Fragment {
             //crono.setBase(SystemClock.elapsedRealtime());
             //crono.start();
             radio.setText(R.string.radio_encendida);
-            btnStreaming.setChecked(sGetMainService.getMainService().isPlaying());
 
         } else {
             //crono.stop();
             radio.setText(R.string.radio_apagada);
-            btnStreaming.setChecked(false);
-
         }
+        btnStreaming.setChecked(sGetMainService.getMainService().isPlaying());
     }
 }

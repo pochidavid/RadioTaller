@@ -38,6 +38,9 @@
     <string name="btn_guardar">Guardar</string>
 
     <string name="btn_apariencia">Apariencia</string>
+    <string name="no_hay_usuario_registrado">No hay usuario registrado</string>
+    <string name="usted_esta_por_enviar_comentarios_como">Usted esta por enviar comentarios como:</string>
+
 
 
 </resources>

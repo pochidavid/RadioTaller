@@ -15,6 +15,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 
 /**
- * Service that controls the media player and the notification that represents it.
+ * Servicio que controla el reproductor multimedia y la notificación que lo representa.
  */
 public class MediaPlayerService extends Service implements AudioManager.OnAudioFocusChangeListener,
         MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnInfoListener {
@@ -40,28 +41,27 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private MediaPlayer mMediaPlayer = null;
     private AudioManager mAudioManager = null;
 
-    //The URL that feeds the KZFR stream.
+    //The URL Streaming
     private static final String mStreamUrl = "http://stream-tx1.radioparadise.com:8090/;stream/1";
 
-    //Wifi Lock to ensure the wifo does not ge to sleep while we are stearming music.
+    //Wifi Lock  para asegurar que el wifi no se duerma mientras estamos en stearming .
     private WifiManager.WifiLock mWifiLock;
 
     enum State {
-        Retrieving, // the MediaRetriever is retrieving music
+        Retrieving,
         Stopped,  //Media player is stopped and not prepared to play
         Preparing, // Media player is preparing to play
         Playeng,  // MediaPlayer playback is active.
-        // There is a chance that the MP is actually paused here if we do not have audio focus.
-        // We stay in this state so we know to resume when we gain audio focus again.
+
         Paused // Audio Playback is paused
     }
 
     private State mState = State.Stopped;
 
     enum AudioFocus {
-        NoFocusNoDuck, // service does not have audio focus and cannot duck
-        NoFocusCanDuck, // we don't have focus but we can play at low volume ("ducking")
-        Focused  // media player has full audio focus
+        NoFocusNoDuck,
+        NoFocusCanDuck,
+        Focused
     }
 
     private AudioFocus mAudioFocus = AudioFocus.NoFocusNoDuck;
@@ -152,9 +152,9 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     /**
-     * The radio streaming service runs in forground mode to keep the Android OS from killing it.
-     * The OnStartCommand is called every time there is a call to start service and the service is
-     * already started. By Passing an intent to the onStartCommand we can play and pause the music.
+     * El servicio de transmisión de radio se ejecuta en modo forground para evitar que el sistema operativo Android lo mate.
+     * El OnStartCommand se llama cada vez que hay una llamada para iniciar el servicio y el servicio es
+     * ya iniciado. Al pasar un intento a onStartCommand podemos reproducir y pausar la música.
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -178,10 +178,10 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
                     break;
             }
         }
-        return START_STICKY; //do not restart service if it is killed.
+        return START_STICKY; // no reiniciar el servicio si se cancela.
     }
 
-    //if the media player is paused or stopped and this method has been triggered then stop the service.
+    // si el reproductor multimedia está pausado o detenido y este método se ha activado, detenga el servicio.
     private void closeIfPaused() {
         if (mState == State.Paused || mState == State.Stopped) {
             close();
@@ -199,9 +199,9 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     /**
-     * Check if the media player was initialized and we have audio focus.
-     * Without audio focus we do not start the media player.
-     * change state and start to prepare async
+     * Compruebe si el reproductor multimedia se ha inicializado y si tenemos enfoque de audio.
+     * Sin enfoque de audio no iniciamos el reproductor multimedia.
+     * Cambiar estado y empezar a preparar async.
      */
     private void configAndPrepareMediaPlayer() {
         initMediaPlayer();
@@ -212,8 +212,8 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     /**
-     * The media player is prepared check to make sure we are not in the stopped or paused states
-     * before starting the media player
+     * El reproductor de medios está preparado para verificar que no estamos en los estados de parada o pausa
+     * antes de iniciar el reproductor multimedia
      */
     @Override
     public void onPrepared(MediaPlayer mp) {
@@ -223,7 +223,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     /*
-        Check if the media player is available and start it.
+        Compruebe si el reproductor multimedia está disponible e inícielo.
      */
     private void startMediaPlayer() {
         if (mMediaPlayer != null) {
@@ -240,9 +240,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
         LocalBroadcastManager.getInstance(this).sendBroadcast(updatePlayerIntent);
     }
 
-    /*
-        Request audio focus and aquire a wifi lock. Returns true if audio focus was granted.
-     */
+
     private void requestResources() {
         setupAudioManager();
         setupWifiLock();
@@ -259,25 +257,23 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
 
     }
 
-    /**
-     * if the Media player is playing then stop it. Change the state and relax the wifi lock and
-     * audio focus.
-     */
+
     private void stopMediaPlayer() {
-        // Lost focus for an unbounded amount of time: stop playback and release media player
+
         if (mMediaPlayer != null) {
             if (mMediaPlayer.isPlaying()) mMediaPlayer.stop();
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
         mState = State.Stopped;
-        //relax the resources because we no longer need them.
+
         relaxResources();
         giveUpAudioFocus();
     }
 
     private void processPlayRequest() {
         if (mState == State.Stopped) {
+            Toast.makeText(this, "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG).show();
             sendBufferingIntent();
             configAndPrepareMediaPlayer();
         } else if (mState == State.Paused) {
@@ -286,7 +282,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
         }
     }
 
-    //send an intent telling any activity listening to this intent that the media player is buffering.
+
     private void sendBufferingIntent() {
         Intent bufferingPlayerIntent = new Intent(MainActivity.BUFFERING);
         LocalBroadcastManager.getInstance(this).sendBroadcast(bufferingPlayerIntent);
@@ -304,10 +300,10 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     /**
-     * There is no media style notification for operating systems below api 21. So This method builds
-     * a simple compat notification that has a play or pause button depending on if the player is
-     * paused or played. if foreGroundOrUpdate then the service should go to the foreground. else
-     * just update the notification.
+     * No hay notificación de estilo de medios para sistemas operativos debajo de la API 21. Así que este método se basa
+     * una notificación de compatibilidad simple que tiene un botón de reproducción o pausa dependiendo de si el reproductor está
+     * pausado o en play. Si foreGroundOrUpdate, el servicio debe ir al primer plano. más
+     * Solo actualiza la notificación.
      */
     private void buildNotification(boolean startForeground) {
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);
@@ -368,16 +364,16 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
         stopMediaPlayer();
     }
 
-    //give up wifi lock if it is held and stop the service from being a foreground service.
+
     private void relaxResources() {
 
-        //Release the WifiLock resource
+
         if (mWifiLock != null && mWifiLock.isHeld()) {
             mWifiLock.release();
         }
 
 
-        // stop service from being a foreground service. Passing true removes the notification as well.
+
         stopForeground(true);
 
     }
