@@ -46,5 +46,8 @@ public interface ProgramacionDao {
     void delete(Horario horario);
 
     @Insert(onConflict = REPLACE)
-    void insertAll(List<Programa> body);
+    void insertAllProgramas(List<Programa> programs);
+
+    @Insert(onConflict = REPLACE)
+    void insertAllHorarios(List<Horario> horarios);
 }

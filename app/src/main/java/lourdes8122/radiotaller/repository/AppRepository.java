@@ -34,7 +34,7 @@ public class AppRepository {
             ProgramacionService programacionService,
             ProgramacionDao programacionDao,
             SubscripcionesDao subscripcionesDao,
-            Executor executor){
+            Executor executor) {
 
         this.programacionService = programacionService;
         this.programacionDao = programacionDao;
@@ -42,6 +42,55 @@ public class AppRepository {
         this.executor = executor;
 
     }
+
+    /*
+    public LiveData<List<Programa>> getProgramas() {
+        refreshProgramacion();
+
+        final MutableLiveData<List<Programa>> data = new MutableLiveData<>();
+
+
+
+        //Busca los horarios y espera a que se complete la tarea
+        CompletionService<String> service
+                = new ExecutorCompletionService<>(executor);
+
+        List<Programa> programas = new ArrayList<>();
+
+        service.submit( ()->{
+            programas.addAll(programacionDao.getProgramas().getValue());
+        },"Programas Cargados");
+
+        try {
+            if (service.take().isDone())
+                Log.v("Radio Repository", "Programas Cargados \n" + programas);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        for (Programa p : programas) {
+
+            service.submit(
+                    () -> {
+                        List<Horario> horarios = new ArrayList<>();
+                        horarios.addAll(programacionDao.getHorariosByPrograma(p.getId()).getValue());
+                        p.setHorarios(horarios);
+
+
+                    }, "Horarios Cargados");
+            try {
+                if (service.take().isDone())
+                    Log.v("Radio Repository", "Horarios Cargados \n" + p.getHorarios());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        data.setValue(programas);
+
+        return data;
+    }
+
+    */
 
     public LiveData<List<Programa>> getProgramas() {
         final MutableLiveData<List<Programa>> data = new MutableLiveData<>();
@@ -58,18 +107,18 @@ public class AppRepository {
                 for(Programa p: programas){
 
                     service.submit(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                List<Horario> horarios = new ArrayList<>();
-                                horarios.addAll(programacionService.getHorarios(p.getId()).execute().body());
-                                p.setHorarios(horarios);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },"Horarios Cargados");
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        List<Horario> horarios = new ArrayList<>();
+                                        horarios.addAll(programacionService.getHorarios(p.getId()).execute().body());
+                                        p.setHorarios(horarios);
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            },"Horarios Cargados");
                     try {
                         if(service.take().isDone()) Log.v("Radio Repository","Horarios Cargados \n"+p.getHorarios());
                     } catch (InterruptedException e) {
@@ -89,74 +138,29 @@ public class AppRepository {
         return data;
     }
 
-    public LiveData<List<Horario>> getHorarios(){
-        final MutableLiveData<List<Horario>> data = new MutableLiveData<>();
+    public LiveData<List<Horario>> getHorarios() {
+        refreshProgramacion();
 
-        programacionService.getHorarios().enqueue(new Callback<List<Horario>>() {
-            @Override
-            public void onResponse(Call<List<Horario>> call, Response<List<Horario>> response) {
-                System.out.println(response.body());
-                data.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Horario>> call, Throwable t) {
-
-            }
-
-        });
-
-        return data;
+        return programacionDao.getHorarios();
     }
 
-    public LiveData<List<Horario>> getHorarios(int idPrograma){
-        final MutableLiveData<List<Horario>> data = new MutableLiveData<>();
+    public LiveData<List<Horario>> getHorarios(int idPrograma) {
+        refreshProgramacion();
 
-        programacionService.getHorarios().enqueue(new Callback<List<Horario>>() {
-            @Override
-            public void onResponse(Call<List<Horario>> call, Response<List<Horario>> response) {
-                System.out.println(response.body());
-                data.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Horario>> call, Throwable t) {
-
-            }
-
-        });
-
-        return data;
+        return programacionDao.getHorariosByPrograma(idPrograma);
     }
 
-    //Todo: borrar metodos de creacion
-    public void savePrograma(Programa programa){
-            programacionService.savePrograma(programa).enqueue(new Callback<Programa>() {
-                @Override
-                public void onResponse(Call<Programa> call, Response<Programa> response) {
+    public void refreshProgramacion() {
+        executor.execute(() -> {
+            try {
+                Response<List<Programa>> programasResponse = programacionService.getProgramas().execute();
+                programacionDao.insertAllProgramas(programasResponse.body());
 
-                }
-
-                @Override
-                public void onFailure(Call<Programa> call, Throwable t) {
-
-                }
-            });
-
-    }
-
-    public void saveHorario(Horario horario){
-        programacionService.saveHorario(horario).enqueue(new Callback<Horario>() {
-            @Override
-            public void onResponse(Call<Horario> call, Response<Horario> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<Horario> call, Throwable t) {
-
+                Response<List<Horario>> horariosResponse = programacionService.getHorarios().execute();
+                programacionDao.insertAllHorarios(horariosResponse.body());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
-
     }
 }

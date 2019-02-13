@@ -1,4 +1,4 @@
-package lourdes8122.radiotaller;
+package lourdes8122.radiotaller.services;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -10,6 +10,8 @@ import android.util.Log;
 import com.google.firebase.messaging.RemoteMessage;
 
 import androidx.core.app.NotificationManagerCompat;
+import lourdes8122.radiotaller.MainActivity;
+import lourdes8122.radiotaller.R;
 
 public class NotificationsService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMessage";

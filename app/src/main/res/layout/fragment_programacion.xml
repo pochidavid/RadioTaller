@@ -18,6 +18,24 @@
         android:textSize="30sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/tv_marcar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Marca los horarios en los que quieres ser notificado"
+        android:visibility="gone" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="14dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/programas_recycler"
         android:layout_width="match_parent"

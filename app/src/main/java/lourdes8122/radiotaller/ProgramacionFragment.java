@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ProgramacionFragment extends Fragment {
     private RecyclerView programas_recycler;
     private RecyclerView.Adapter adapter;
     private List<Programa> programacion = new ArrayList<>();
+    private ProgressBar progressBar;
 
     public ProgramacionFragment() {
         // Required empty public constructor
@@ -61,6 +63,7 @@ public class ProgramacionFragment extends Fragment {
                 programacion.clear();
                 programacion.addAll(programas);
 
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -72,6 +75,7 @@ public class ProgramacionFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_programacion, container, false);
 
+        progressBar = view.findViewById(R.id.progressBar);
         adapter = new ProgramacionAdapter(getContext(),programacion);
         programas_recycler = view.findViewById(R.id.programas_recycler);
         programas_recycler.setAdapter(adapter);

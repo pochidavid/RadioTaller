@@ -1,4 +1,4 @@
-package lourdes8122.radiotaller;
+package lourdes8122.radiotaller.services;
 
 import android.app.Notification;
 import android.app.PendingIntent;
@@ -20,8 +20,8 @@ import java.io.IOException;
 
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-
+import lourdes8122.radiotaller.MainActivity;
+import lourdes8122.radiotaller.R;
 
 
 /**

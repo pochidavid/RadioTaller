@@ -38,6 +38,8 @@
     <string name="btn_guardar">Guardar</string>
 
     <string name="btn_apariencia">Apariencia</string>
+    <string name="alarm_notification_title">El programa esta comenzando</string>
+    <string name="alarm_notification_text">El programa esta comenzando. Enciende la radio para escucharlo.</string>
 
 
 </resources>

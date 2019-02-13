@@ -3,6 +3,7 @@ package lourdes8122.radiotaller.model;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -77,6 +78,11 @@ public class Horario {
     @Override
     public String toString() {
         return "Programa: "+programaId+" | "+getDayOfWeekString()+" "+getTimeString();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        return (this.toString().equals(obj.toString()));
     }
 }
 

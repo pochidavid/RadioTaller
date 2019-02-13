@@ -38,12 +38,9 @@ public class DataModule {
                                               ProgramacionDao programacionDao,
                                               SubscripcionesDao subscripcionesDao,
                                               Executor executor
-            //, UsuarioDao usuarioDao
     ){
 
-        return new AppRepository(programacionService,programacionDao,subscripcionesDao,executor
-               // , usuarioDao
-        );
+        return new AppRepository(programacionService,programacionDao,subscripcionesDao,executor);
     }
 
     @Provides
@@ -83,13 +80,12 @@ public class DataModule {
     @Provides
     public AppDatabase provideAppDatabase(){
         return Room.databaseBuilder(application.getApplicationContext(), AppDatabase.class,DB_NAME)
-                .enableMultiInstanceInvalidation()
                 .build();
     }
 
     @Provides
     public Executor provideExecutor(){
-        return Executors.newCachedThreadPool();
+        return Executors.newSingleThreadExecutor();
     }
 
     //@Provides
