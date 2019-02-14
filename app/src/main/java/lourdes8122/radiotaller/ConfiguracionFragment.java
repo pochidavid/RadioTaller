@@ -176,13 +176,13 @@ public class ConfiguracionFragment extends Fragment {
                         editor.putInt("THEME", R.style.AppTheme);
                         break;
                     case "Action":
-                        editor.putInt("THEME", R.style.AppTheme.NoActionBar);
+                        editor.putInt("THEME", R.style.NoActionBar);
                         break;
                     case "BarOverlay":
-                        editor.putInt("THEME", R.style.AppTheme.AppBarOverlay);
+                        editor.putInt("THEME", R.style.AppBarOverlay);
                         break;
                     case "PopupOverlay":
-                        editor.putInt("THEME", R.style.AppTheme.PopupOverlay);
+                        editor.putInt("THEME", R.style.PopupOverlay);
                         break;
 
                 }editor.commit();

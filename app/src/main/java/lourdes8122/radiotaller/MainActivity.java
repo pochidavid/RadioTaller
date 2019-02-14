@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(myPreferences.getInt("THEME", R.style.AppTheme));
+        setTheme(myPreferences.getInt("THEME", R.style.NoActionBar));
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
