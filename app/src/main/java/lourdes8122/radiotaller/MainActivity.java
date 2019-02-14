@@ -8,13 +8,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+<<<<<<< HEAD
 import android.content.SharedPreferences;
+=======
+import android.net.Uri;
+>>>>>>> master
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.Button;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,11 +39,17 @@ public class MainActivity extends AppCompatActivity
     private MediaPlayerService mNowPlayingService;
     SharedPreferences myPreferences;
     private static final String TAG = MainActivity.class.getSimpleName();
+    public static final String IR_CONFIGURAR = "lourdes8122.radiotaller.MainActivity.IR_CONFIGURAR";
     public static final String UPDATE_PLAYER = "lourdes8122.radiotaller.MainActivity.UPDATE_PLAYER";
     public static final String BUFFERING = TAG + ".buffering_player";
     public EnVivoFragment fragmentInicio;
     public ProgramacionFragment fragmentProgramacion;
     public ConfiguracionFragment fragmentConfiguracion;
+    public WebFragment fragmentWeb;
+    public EnviarComentariosFragment fragmentEnviarComentario;
+    public Boolean actualizarBtnToogle;
+
+    Button modificarUsuario;
 
     private boolean mBound;
 
@@ -50,6 +63,8 @@ public class MainActivity extends AppCompatActivity
             } else if (intent.getAction().equals(BUFFERING)) {
                 showMediaPlayerBuffering();
             }
+
+
         }
     };
 
@@ -72,10 +87,13 @@ public class MainActivity extends AppCompatActivity
 
     private void updateMediaPlayerToggle() {
         //TODO: Arreglar exception - ProgramacionFragment cannot be cast to lourdes8122.radiotaller.EnVivoFragment
-        EnVivoFragment nowPlayingFragment = (EnVivoFragment) getSupportFragmentManager().findFragmentById(R.id.contenedor);
+        if(getSupportFragmentManager().findFragmentById(R.id.contenedor)==fragmentInicio) {
+            actualizarBtnToogle = true;
+            EnVivoFragment nowPlayingFragment = (EnVivoFragment) getSupportFragmentManager().findFragmentById(R.id.contenedor);
 
-        if (nowPlayingFragment != null) {
-            nowPlayingFragment.updateToggle();
+            if (nowPlayingFragment != null) {
+                nowPlayingFragment.updateToggle();
+            }
         }
     }
 
@@ -96,8 +114,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        actualizarBtnToogle = false;
+
+
+
         fragmentProgramacion = new ProgramacionFragment();
         fragmentConfiguracion = new ConfiguracionFragment();
+        fragmentWeb = new WebFragment();
+        fragmentEnviarComentario = new EnviarComentariosFragment();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -126,10 +150,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        WebView webView = (WebView) findViewById(R.id.web);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+        } else if (webView != null && webView.canGoBack()) {
+                     webView.goBack();
+                }else {
+                    super.onBackPressed();
         }
     }
 
@@ -163,21 +190,30 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.envivo) {
-            // Handle the camera action
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.contenedor,fragmentInicio)
+                    .replace(R.id.contenedor, fragmentInicio)
                     .commit();
+
         } else if (id == R.id.programacion) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenedor,fragmentProgramacion)
                     .commit();
         } else if (id == R.id.youtube) {
-
+            Uri uri = Uri.parse("https://www.youtube.com/channel/UCr_tYBYP-1j4DFx1s2ksVVg");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         } else if (id == R.id.web) {
-
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor, fragmentWeb)
+                    .commit();
         } else if (id == R.id.comentarios) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contenedor, fragmentEnviarComentario)
+                    .commit();
 
         } else if (id == R.id.config) {
             getSupportFragmentManager()

@@ -38,11 +38,23 @@
     <string name="btn_guardar">Guardar</string>
 
     <string name="btn_apariencia">Apariencia</string>
+<<<<<<< HEAD
     <string-array name="themes">
         <item>AppTheme</item>
         <item>AppTheme.NoActionBar</item>
         <item>AppTheme.AppBarOverlay</item>
         <item>AppTheme.PopupOverlay</item>
     </string-array>
+=======
+<<<<<<< HEAD
+    <string name="alarm_notification_title">El programa esta comenzando</string>
+    <string name="alarm_notification_text">El programa esta comenzando. Enciende la radio para escucharlo.</string>
+=======
+    <string name="no_hay_usuario_registrado">No hay usuario registrado</string>
+    <string name="usted_esta_por_enviar_comentarios_como">Usted esta por enviar comentarios como:</string>
+
+>>>>>>> master
+
+>>>>>>> master
 
 </resources>
