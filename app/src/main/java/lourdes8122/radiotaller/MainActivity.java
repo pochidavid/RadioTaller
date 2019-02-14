@@ -8,11 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-<<<<<<< HEAD
 import android.content.SharedPreferences;
-=======
 import android.net.Uri;
->>>>>>> master
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -22,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -196,6 +194,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.programacion) {
+            Toast.makeText(MainActivity.this,"Conectado...",Toast.LENGTH_SHORT);
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenedor,fragmentProgramacion)

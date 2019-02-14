@@ -186,7 +186,7 @@ public class ConfiguracionFragment extends Fragment {
                         break;
 
                 }editor.commit();
-                Toast.makeText(getContext(),"El tema seleccionado se visualizara al abrir la aplicación",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"Debe reiniciar la App para los cambios",Toast.LENGTH_LONG).show();
 
             }
         });
