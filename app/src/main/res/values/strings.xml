@@ -38,6 +38,11 @@
     <string name="btn_guardar">Guardar</string>
 
     <string name="btn_apariencia">Apariencia</string>
-
+    <string-array name="themes">
+        <item>AppTheme</item>
+        <item>AppTheme.NoActionBar</item>
+        <item>AppTheme.AppBarOverlay</item>
+        <item>AppTheme.PopupOverlay</item>
+    </string-array>
 
 </resources>

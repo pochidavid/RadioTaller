@@ -1,7 +1,6 @@
 package lourdes8122.radiotaller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,16 +12,16 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-
-import androidx.fragment.app.Fragment;
-
-
+import java.util.List;
 
 
 public class ConfiguracionFragment extends Fragment {
@@ -51,14 +50,20 @@ public class ConfiguracionFragment extends Fragment {
     private Button guardar;
     private int edad;
 
+    //Apariencia
+    private ListView themes;
+    private ArrayAdapter<String> adapter_themes;
+    private String[] datos = new String[]{"Classic","Action","BarOverlay","PopupOverlay"};
+
     SharedPreferences myPreferences;
+
     public ConfiguracionFragment() {
         // Required empty public constructor
     }
 
     public static ConfiguracionFragment newInstance() {
         ConfiguracionFragment fragment = new ConfiguracionFragment();
-       Bundle args = new Bundle();
+        Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,7 +99,6 @@ public class ConfiguracionFragment extends Fragment {
         email =  newView.findViewById(R.id.email_usuario);
 
         //seteo datos de usuario
-        myPreferences = PreferenceManager.getDefaultSharedPreferences(mContainer.getContext());
         nombre.setText(myPreferences.getString("NOMBRE", "Nombre"));
         apellido.setText(myPreferences.getString("APELLIDO", "Apellido"));
         nacimiento.setText(myPreferences.getString("FECHA_NACIMIENTO", "Fecha de Nacimiento AAAA/MM/DD"));
@@ -128,6 +132,7 @@ public class ConfiguracionFragment extends Fragment {
             placeholder.removeAllViews();
             placeholder.addView(rootView);
         }
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(mContainer.getContext());
         btnPerfil = rootView.findViewById(R.id.perfil_usuario);
         btnApariencia = rootView.findViewById(R.id.apariencia);
 
@@ -147,9 +152,44 @@ public class ConfiguracionFragment extends Fragment {
 
 
     private void getApariencia(){
-        //View newView = mInflater.inflate(R.layout.config_apariencia, mContainer, false);
-        //placeholder.removeAllViews();
-        //placeholder.addView(newView);
+
+        View newView = mInflater.inflate(R.layout.config_apariencia, mContainer, false);
+        placeholder.removeAllViews();
+        placeholder.addView(newView);
+        volver=(Button) newView.findViewById(R.id.btn_volver);
+        themes = (ListView) newView.findViewById(R.id.list_themes);
+        adapter_themes = new ArrayAdapter (getContext(), android.R.layout.simple_list_item_1,datos);
+        themes.setAdapter(adapter_themes);
+        SharedPreferences.Editor editor = myPreferences.edit();
+
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View vi) {
+                getDefaultView();
+            }
+        });
+        themes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (adapter_themes.getItem(position).toString()){
+                    case "Classic":
+                        editor.putInt("THEME", R.style.AppTheme);
+                        break;
+                    case "Action":
+                        editor.putInt("THEME", R.style.AppTheme.NoActionBar);
+                        break;
+                    case "BarOverlay":
+                        editor.putInt("THEME", R.style.AppTheme.AppBarOverlay);
+                        break;
+                    case "PopupOverlay":
+                        editor.putInt("THEME", R.style.AppTheme.PopupOverlay);
+                        break;
+
+                }editor.commit();
+                Toast.makeText(getContext(),"El tema seleccionado se visualizara al abrir la aplicación",Toast.LENGTH_LONG).show();
+
+            }
+        });
     }
     private void actualizarUsuario(){
 

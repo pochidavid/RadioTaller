@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity
 
 
     private MediaPlayerService mNowPlayingService;
-
+    SharedPreferences myPreferences;
     private static final String TAG = MainActivity.class.getSimpleName();
     public static final String UPDATE_PLAYER = "lourdes8122.radiotaller.MainActivity.UPDATE_PLAYER";
     public static final String BUFFERING = TAG + ".buffering_player";
@@ -88,6 +90,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        setTheme(myPreferences.getInt("THEME", R.style.AppTheme));
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
