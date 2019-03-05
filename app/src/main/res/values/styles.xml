@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/md_pink_300</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:toolbarStyle">@color/md_indigo_400</item>
+
     </style>
 
     <style name="NoActionBar" parent="AppTheme.NoActionBar">
@@ -16,6 +18,7 @@
         <item name="colorAccent">@color/md_orange_300</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:toolbarStyle">@color/md_green_400</item>
     </style>
 
     <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -24,6 +27,7 @@
         <item name="colorAccent">@color/md_pink_600</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
     </style>
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
