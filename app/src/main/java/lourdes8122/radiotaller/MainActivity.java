@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity
     Button modificarUsuario;
 
     private boolean mBound;
+
 
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -107,13 +109,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        setTheme(myPreferences.getInt("THEME", R.style.NoActionBar));
+        setTheme(myPreferences.getInt("THEME", R.style.AppTheme));
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         actualizarBtnToogle = false;
-
 
 
         fragmentProgramacion = new ProgramacionFragment();
@@ -128,6 +129,8 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        //navigationView.setBackgroundResource(R.drawable.banner);
         navigationView.setNavigationItemSelectedListener(this);
         if (savedInstanceState == null) {
             fragmentInicio = new EnVivoFragment();
@@ -135,6 +138,23 @@ public class MainActivity extends AppCompatActivity
                     .beginTransaction()
                     .add(R.id.contenedor, fragmentInicio)
                     .commit();
+        }
+
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        switch (myPreferences.getInt("THEME", R.style.AppTheme)){
+            case R.style.AppTheme:
+                navigationView.inflateHeaderView(R.layout.nav_header_main).setBackgroundResource(R.drawable.banner02);
+                break;
+            case R.style.AppTheme2:
+                navigationView.inflateHeaderView(R.layout.nav_header_main).setBackgroundResource(R.drawable.banner02);
+                break;
+            case R.style.AppTheme3:
+                navigationView.inflateHeaderView(R.layout.nav_header_main).setBackgroundResource(R.drawable.banner01);
+                break;
+            case R.style.AppTheme4:
+                navigationView.inflateHeaderView(R.layout.nav_header_main).setBackgroundResource(R.drawable.banner01);
+                break;
         }
 
 

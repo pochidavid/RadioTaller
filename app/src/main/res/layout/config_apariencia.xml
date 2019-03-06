@@ -5,16 +5,33 @@
     android:layout_marginTop="60dp"
     android:orientation="vertical">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Apariencia"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
     <ListView
         android:id="@+id/list_themes"
         android:layout_width="match_parent"
         android:layout_height="252dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:choiceMode="multipleChoice"></ListView>
 
     <Button
         android:id="@+id/btn_volver"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
         android:text="Volver" />
 
 </LinearLayout>

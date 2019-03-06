@@ -53,7 +53,7 @@ public class ConfiguracionFragment extends Fragment {
     //Apariencia
     private ListView themes;
     private ArrayAdapter<String> adapter_themes;
-    private String[] datos = new String[]{"Classic","Action","BarOverlay","PopupOverlay"};
+    private String[] datos = new String[]{"Classic","Classic Dark","Red Time","Red Time Dark"};
 
     SharedPreferences myPreferences;
 
@@ -101,7 +101,7 @@ public class ConfiguracionFragment extends Fragment {
         //seteo datos de usuario
         nombre.setText(myPreferences.getString("NOMBRE", "Nombre"));
         apellido.setText(myPreferences.getString("APELLIDO", "Apellido"));
-        nacimiento.setText(myPreferences.getString("FECHA_NACIMIENTO", "Fecha de Nacimiento AAAA/MM/DD"));
+        nacimiento.setText(myPreferences.getString("FECHA_NACIMIENTO", "Fecha de Nacimiento DD/MM/AAAA"));
         pais.setText(myPreferences.getString("PAIS", "Pais"));
         ciudad.setText(myPreferences.getString("CIUDAD", "Ciudad"));
         provincia.setText(myPreferences.getString("PROVINCIA", "Provincia"));
@@ -175,14 +175,14 @@ public class ConfiguracionFragment extends Fragment {
                     case "Classic":
                         editor.putInt("THEME", R.style.AppTheme);
                         break;
-                    case "Action":
-                        editor.putInt("THEME", R.style.NoActionBar);
+                    case "Classic Dark":
+                        editor.putInt("THEME", R.style.AppTheme2);
                         break;
-                    case "BarOverlay":
-                        editor.putInt("THEME", R.style.AppBarOverlay);
+                    case "Red Time":
+                        editor.putInt("THEME", R.style.AppTheme3);
                         break;
-                    case "PopupOverlay":
-                        editor.putInt("THEME", R.style.PopupOverlay);
+                    case "Red Time Dark":
+                        editor.putInt("THEME", R.style.AppTheme4);
                         break;
 
                 }editor.commit();
@@ -208,7 +208,7 @@ public class ConfiguracionFragment extends Fragment {
         }
         else{
             //validar formato de fecha
-            if(nacimiento.getText().toString().trim().length() != 10 || !nacimiento.getText().toString().contains("/")){
+            /*if(nacimiento.getText().toString().trim().length() != 10 || !nacimiento.getText().toString().contains("/")){
                 Toast.makeText(getContext(),"El Formato de Fecha debe ser AAAA/MM/DD", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -216,7 +216,7 @@ public class ConfiguracionFragment extends Fragment {
             if(edad()<EDAD_MINIMA){
                 Toast.makeText(getContext(),"Debe ser Mayor a " + EDAD_MINIMA +" Años", Toast.LENGTH_LONG).show();
                 return;
-            }
+            }*/
             //validar email
             String mail = email.getText().toString().trim();
             String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";

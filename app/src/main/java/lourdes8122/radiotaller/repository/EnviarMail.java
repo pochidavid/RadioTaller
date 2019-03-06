@@ -29,7 +29,7 @@ public class EnviarMail {
     private static String contrasenyaCorreo = "Lourdes1858";                 // Contraseña
 
     // Correo al que enviaremos el mensaje
-    private static String destintatarioCorreo = "pochidavid@gmail.com";
+    private static String destintatarioCorreo = "radiotallerfm@gmail.com";
 
     public static void main() throws MessagingException {
                 //enviarMensaje("Hola Dionis","Prueba cliente correo, buen fin de semana. Sergi Barola");

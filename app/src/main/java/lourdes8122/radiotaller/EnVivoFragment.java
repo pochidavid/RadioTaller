@@ -3,12 +3,17 @@ package lourdes8122.radiotaller;
 import android.app.Activity;
 import android.app.Notification;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -16,6 +21,10 @@ import android.widget.ToggleButton;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+
+import static lourdes8122.radiotaller.R.drawable.fondo2;
+import static lourdes8122.radiotaller.R.drawable.fondos;
+import static lourdes8122.radiotaller.R.drawable.logoradio_sin_fondo;
 
 
 public class EnVivoFragment extends Fragment {
@@ -30,6 +39,7 @@ public class EnVivoFragment extends Fragment {
     private String url = "http://giss.tv:8000/santi.ogg";
     private ToggleButton btnStreaming;
     private TextView radio;
+    SharedPreferences myPreferences;
     //private Chronometer crono;
 
 
@@ -57,6 +67,24 @@ public class EnVivoFragment extends Fragment {
         iniciarMediaPlayer();
         btnStreaming = rootView.findViewById(R.id.play_pause_button);
         radio = rootView.findViewById(R.id.media_player_title);
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        switch (myPreferences.getInt("THEME", R.style.AppTheme)){
+            case R.style.AppTheme:
+                rootView.setBackgroundResource(R.drawable.fondo2);
+                break;
+            case R.style.AppTheme2:
+                rootView.setBackgroundResource(R.drawable.fondo2);
+                break;
+            case R.style.AppTheme3:
+                rootView.setBackgroundResource(R.drawable.fondo1);
+                break;
+            case R.style.AppTheme4:
+                rootView.setBackgroundResource(R.drawable.fondo1);
+                break;
+        }
+
+
         //crono = rootView.findViewById(R.id.cronometro);
 
 

@@ -4,22 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="50dp"
+
     android:orientation="vertical"
     tools:context=".ConfiguracionFragment">
 
 
-    <Button
-        android:id="@+id/perfil_usuario"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_perfil_usuario" />
+        android:layout_height="100dp" />
 
-    <Button
-        android:id="@+id/apariencia"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_apariencia" />
+        android:text="@string/configuracion"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/perfil_usuario"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="@string/btn_perfil_usuario" />
+
+        <Button
+            android:id="@+id/apariencia"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:text="@string/btn_apariencia" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="152dp"
+            android:layout_marginTop="70dp"
+            android:src="@mipmap/ic_launcher" />
+    </LinearLayout>
 
 
 </LinearLayout>
