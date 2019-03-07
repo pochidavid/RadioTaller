@@ -23,7 +23,7 @@ public class Horario {
     private int programaId;
 
     public Horario(int dayOfWeek, Date time, int programaId){
-        if(dayOfWeek > 7 || dayOfWeek < 1) throw new DayOfWeekError();
+        if(dayOfWeek > 8 || dayOfWeek < 1) throw new DayOfWeekError();
         this.dayOfWeek = dayOfWeek;
         this.time = time;
         this.programaId = programaId;
@@ -34,7 +34,7 @@ public class Horario {
     }
 
     public void setDayOfWeek(int dayOfWeek) {
-        if(dayOfWeek > 7 || dayOfWeek < 1) throw new DayOfWeekError();
+        if(dayOfWeek > 8 || dayOfWeek < 1) throw new DayOfWeekError();
 
         this.dayOfWeek = dayOfWeek;
     }
@@ -64,6 +64,7 @@ public class Horario {
             case 5: return "Jueves";
             case 6: return "Viernes";
             case 7: return "Sabado";
+            case 8: return "Lunes a Sabado";
             default: return null;
         }
     }

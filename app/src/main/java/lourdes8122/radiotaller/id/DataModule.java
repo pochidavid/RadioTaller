@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class DataModule {
 
-    private static final String BASE_URL = "https://e8bb8611-616f-4699-a7c7-b22ffce0d91e.mock.pstmn.io";
+    private static final String BASE_URL = "http://www.radiotallerfm.com.ar/API/";
     //private static final String BASE_URL = "http://10.0.2.2:4000/";
     private static final String DB_NAME = "radio-taller-DB";
 
