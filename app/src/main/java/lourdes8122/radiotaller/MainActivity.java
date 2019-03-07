@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity
                     .commit();
 
         } else if (id == R.id.programacion) {
-            Toast.makeText(MainActivity.this,"Conectado...",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this,"Cargando. Espere...",Toast.LENGTH_SHORT).show();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.contenedor,fragmentProgramacion)
