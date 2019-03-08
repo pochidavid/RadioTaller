@@ -15,7 +15,7 @@ public class Programa {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String nombre;
-    private Boolean activo;
+    private int activo;
 
     @Ignore
     transient private List<Horario> horarios = new ArrayList<>();
@@ -23,23 +23,23 @@ public class Programa {
     @Ignore
     public Programa(String nombre){
         this.nombre = nombre;
-        this.activo = true;
+        this.activo = 1;
     }
 
     @Ignore
-    public Programa(String nombre, Boolean activo){
+    public Programa(String nombre, int activo){
         this.nombre = nombre;
         this.activo = activo;
     }
 
-    public Programa(int id, String nombre, Boolean activo){
+    public Programa(int id, String nombre, int activo){
         this.id = id;
         this.nombre = nombre;
         this.activo = activo;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -54,21 +54,27 @@ public class Programa {
         this.nombre = nombre;
     }
 
-    public Boolean getActivo() {
+    public int getActivo() {
         return activo;
     }
 
-    public void setActivo(Boolean activo) {
+    public void setActivo(int activo) {
         this.activo = activo;
     }
 
     @Ignore
     public List<Horario> getHorarios() {
-        return horarios == null? new ArrayList<>() : horarios;
+        if(this.horarios==null) {
+            horarios = new ArrayList<>();
+        }
+        return this.horarios;
     }
 
     public void setHorarios(@Nullable List<Horario> horarios) {
-        this.horarios = horarios == null? new ArrayList<>() : horarios;
+        if(this.horarios==null) {
+            this.horarios = new ArrayList<>();
+        }
+        this.horarios = horarios;
     }
 
     public void addHorario(@Nullable Horario h){
@@ -82,6 +88,6 @@ public class Programa {
     @NonNull
     @Override
     public String toString() {
-        return "("+id+") Programa: "+nombre+", Activo: "+activo;
+        return "("+this.id+") Programa: "+this.nombre+", Activo: "+this.activo;
     }
 }

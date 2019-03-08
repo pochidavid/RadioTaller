@@ -1,9 +1,55 @@
 <resources>
 
-
-    <style name="AppTheme.NoActionBar">
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_indigo_300</item>
+        <item name="colorPrimaryDark">@color/md_indigo_500</item>
+        <item name="colorAccent">@color/md_indigo_600</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
+
+
+
     </style>
+
+
+    <style name="AppTheme2" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorPrimary">@color/md_indigo_600</item>
+        <item name="colorPrimaryDark">@color/md_indigo_900</item>
+        <item name="colorAccent">@color/md_indigo_300</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+
+
+    </style>
+
+
+    <style name="AppTheme3" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_red_400</item>
+        <item name="colorPrimaryDark">@color/md_red_600</item>
+        <item name="colorAccent">@color/md_red_700</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+    </style>
+
+    <style name="AppTheme4" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_red_700</item>
+        <item name="colorPrimaryDark">@color/md_red_900</item>
+        <item name="colorAccent">@color/md_red_400</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+    </style>
+
+
+
 </resources>

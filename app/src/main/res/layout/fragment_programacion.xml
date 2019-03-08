@@ -15,11 +15,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Programación"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@color/md_amber_50"
+        android:textSize="24sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/programas_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp" />
 </LinearLayout>

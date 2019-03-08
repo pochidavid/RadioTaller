@@ -11,18 +11,18 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ProgramacionService {
-    @GET("programas/")
+    @GET("programas.php")
     Call<List<Programa>> getProgramas();
 
-    @GET("horarios/")
+    @GET("horarios.php")
     Call<List<Horario>> getHorarios();
 
-    @GET("horarios/")
-    Call<List<Horario>> getHorarios(@Query("programaId") int programaId);
+    @GET("horario.php")
+    Call<List<Horario>> getHorarios(@Query("programaid") int programaId);
 
-    @POST("programas/")
+    @POST("programas.php")
     Call<Programa> savePrograma(@Body Programa programa);
 
-    @POST("horarios/")
+    @POST("horarios.php")
     Call<Horario> saveHorario(@Body Horario horario);
 }

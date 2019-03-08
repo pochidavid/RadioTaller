@@ -12,6 +12,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
@@ -21,8 +22,7 @@ import java.io.IOException;
 
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-
+import xdroid.toaster.Toaster;
 
 
 /**
@@ -41,8 +41,10 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private MediaPlayer mMediaPlayer = null;
     private AudioManager mAudioManager = null;
 
+    private MiCountDownTimer crono;
+
     //The URL Streaming
-    private static final String mStreamUrl = "http://stream-tx1.radioparadise.com:8090/;stream/1";
+    private static final String mStreamUrl = "http://giss.tv:8000/radiotallerfm.mp3";
 
     //Wifi Lock  para asegurar que el wifi no se duerma mientras estamos en stearming .
     private WifiManager.WifiLock mWifiLock;
@@ -142,9 +144,13 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
             mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
             mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
+            crono = new MiCountDownTimer(10000,1000);
+            crono.start();
+
             try {
                 mMediaPlayer.setDataSource(this, Uri.parse(mStreamUrl));
             } catch (IOException e) {
+                //Toaster.toast("Error en la conexión. Posible servidor caido");
                 e.printStackTrace();
                 stopSelf();
             }
@@ -231,6 +237,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
             sendUpdatePlayerIntent();
             mState = State.Playeng;
             buildNotification(false);
+
         }
     }
 
@@ -238,6 +245,8 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
         Log.d(TAG, "updatePlayerIntent");
         Intent updatePlayerIntent = new Intent(MainActivity.UPDATE_PLAYER);
         LocalBroadcastManager.getInstance(this).sendBroadcast(updatePlayerIntent);
+        crono.cancel();
+
     }
 
 
@@ -401,4 +410,30 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
             return MediaPlayerService.this;
         }
     }
+
+    public class MiCountDownTimer extends CountDownTimer {
+
+        public MiCountDownTimer(long starTime, long interval) {
+            super(starTime, interval);
+            // TODO Auto-generated constructor stub
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            // TODO Auto-generated method stub
+
+            Toaster.toast("Error en la conexión. Posible servidor caido");
+            sendUpdatePlayerIntent();
+            stopMediaPlayer();
+            close();
+
+        }
+    }
+
+
 }
