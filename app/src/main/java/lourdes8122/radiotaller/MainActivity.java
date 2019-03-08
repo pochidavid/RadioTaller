@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    
+
     private void createNotificationChannel() {
         // Crear el canal de notificaciones pero solo para API 26 io superior
         // dado que NotificationChannel es una clase nueva que no está incluida
