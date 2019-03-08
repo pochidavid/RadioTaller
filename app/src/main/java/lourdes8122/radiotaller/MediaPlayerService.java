@@ -44,7 +44,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     private MiCountDownTimer crono;
 
     //The URL Streaming
-    private static final String mStreamUrl = "http://giss.tv:8000/radiopochi.mp3";
+    private static final String mStreamUrl = "http://giss.tv:8000/radiotallerfm.mp3";
 
     //Wifi Lock  para asegurar que el wifi no se duerma mientras estamos en stearming .
     private WifiManager.WifiLock mWifiLock;

@@ -57,14 +57,15 @@ public class Horario {
 
     public String getDayOfWeekString(){
         switch (dayOfWeek){
+            case 0: return "error";
             case 1: return "Domingo";
             case 2: return "Lunes";
             case 3: return "Martes";
-            case 4: return "Miercoles";
+            case 4: return "Miércoles";
             case 5: return "Jueves";
             case 6: return "Viernes";
-            case 7: return "Sabado";
-            case 8: return "Lunes a Sabado";
+            case 7: return "Sábado";
+            case 8: return "Lunes a Sábado";
             default: return null;
         }
     }
@@ -77,7 +78,7 @@ public class Horario {
     @NonNull
     @Override
     public String toString() {
-        return "Programa: "+programaId+" | "+getDayOfWeekString()+" "+getTimeString();
+        return "Programa: "+programaId+ " " + dayOfWeek +" | "+getDayOfWeekString()+" "+getTimeString();
     }
 }
 

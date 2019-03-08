@@ -1,9 +1,14 @@
 package lourdes8122.radiotaller;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,10 @@ public class ProgramacionFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private List<Programa> programacion = new ArrayList<>();
 
+
+    SharedPreferences myPreferences;
+    private ProgressBar progressBar;
+
     public ProgramacionFragment() {
         // Required empty public constructor
     }
@@ -61,21 +70,46 @@ public class ProgramacionFragment extends Fragment {
                 programacion.clear();
                 programacion.addAll(programas);
 
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
         });
     }
 
+
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_programacion, container, false);
 
+        progressBar = view.findViewById(R.id.progressBar);
         adapter = new ProgramacionAdapter(getContext(),programacion);
         programas_recycler = view.findViewById(R.id.programas_recycler);
         programas_recycler.setAdapter(adapter);
         programas_recycler.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
+
+
+
+        myPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        switch (myPreferences.getInt("THEME", R.style.AppTheme)){
+            case R.style.AppTheme:
+                view.setBackgroundResource(R.drawable.fondo2);
+                break;
+            case R.style.AppTheme2:
+                view.setBackgroundResource(R.drawable.fondo2);
+                break;
+            case R.style.AppTheme3:
+                view.setBackgroundResource(R.drawable.fondo1);
+                break;
+            case R.style.AppTheme4:
+                view.setBackgroundResource(R.drawable.fondo1);
+                break;
+        }
+
+
         return view;
     }
 

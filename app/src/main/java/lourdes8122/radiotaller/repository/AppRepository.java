@@ -52,6 +52,7 @@ public class AppRepository {
                 System.out.println(response.body());
                 List<Programa> programas = response.body();
 
+
                 //Busca los horarios y espera a que se complete la tarea
                 CompletionService<String> service
                         = new ExecutorCompletionService<>(executor);
@@ -66,6 +67,7 @@ public class AppRepository {
                                 horarios.addAll(programacionService.getHorarios(p.getId()).execute().body());
                                 p.setHorarios(horarios);
                             } catch (IOException e) {
+                                System.out.println("Algo falla");
                                 e.printStackTrace();
                             }
                         }
@@ -81,6 +83,8 @@ public class AppRepository {
 
             @Override
             public void onFailure(Call<List<Programa>> call, Throwable t) {
+
+                Log.d("Radio Repository", "Failed: " + t.getMessage());
 
             }
 
