@@ -1,15 +1,21 @@
 package lourdes8122.radiotaller;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.firebase.messaging.RemoteMessage;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
+import static lourdes8122.radiotaller.R.mipmap.ic_launcher;
 
 public class NotificationsService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG = "FirebaseMessage";
@@ -17,6 +23,7 @@ public class NotificationsService extends com.google.firebase.messaging.Firebase
 
     public NotificationsService() {
     }
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -52,14 +59,25 @@ public class NotificationsService extends com.google.firebase.messaging.Firebase
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_logoradio);
 
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 2, intent, 0);
-        Notification.Builder builder = new Notification.Builder(this)
-                .setDefaults(Notification.DEFAULT_SOUND)
-                .setContentTitle(remoteMessage.getNotification().getTitle())
-                .setContentText(remoteMessage.getNotification().getBody())
-                .setSmallIcon(R.drawable.ic_radio_black_24dp)
-                .setLargeIcon(largeIcon)
-                .setContentIntent(getMainContentIntent())
-                .setDeleteIntent(pendingIntent);
+        Notification.Builder builder = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, "CANAL01");
+            builder.setContentTitle(remoteMessage.getNotification().getTitle());
+            builder.setContentText(remoteMessage.getNotification().getBody());
+            builder.setSmallIcon(R.drawable.ic_radio_black_24dp);
+            builder.setBadgeIconType(R.drawable.logoradio);
+            builder.setLargeIcon(largeIcon);
+            builder.setContentIntent(getMainContentIntent());
+            builder.setDeleteIntent(pendingIntent);
+        }else{
+            builder = new Notification.Builder(this)
+                    .setContentTitle(remoteMessage.getNotification().getTitle())
+                    .setContentText(remoteMessage.getNotification().getBody())
+                    .setSmallIcon(R.drawable.ic_radio_black_24dp)
+                    .setLargeIcon(largeIcon)
+                    .setContentIntent(getMainContentIntent())
+                    .setDeleteIntent(pendingIntent);
+        }
 
         NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(getApplicationContext());
         notificationManagerCompat.notify(NOTIFICATION_ID, builder.build());

@@ -1,6 +1,9 @@
 package lourdes8122.radiotaller;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -12,14 +15,18 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.io.IOException;
 
+import java.io.IOException;
+import java.nio.channels.Channel;
+
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import xdroid.toaster.Toaster;
@@ -68,6 +75,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
 
     private AudioFocus mAudioFocus = AudioFocus.NoFocusNoDuck;
 
+
     @Override
     public void onAudioFocusChange(int focusChange) {
         switch (focusChange) {
@@ -102,6 +110,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
                 break;
         }
     }
+
 
 
     @Override
@@ -162,6 +171,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      * El OnStartCommand se llama cada vez que hay una llamada para iniciar el servicio y el servicio es
      * ya iniciado. Al pasar un intento a onStartCommand podemos reproducir y pausar la música.
      */
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = null;
@@ -209,6 +219,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      * Sin enfoque de audio no iniciamos el reproductor multimedia.
      * Cambiar estado y empezar a preparar async.
      */
+
     private void configAndPrepareMediaPlayer() {
         initMediaPlayer();
         mState = State.Preparing;
@@ -231,6 +242,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     /*
         Compruebe si el reproductor multimedia está disponible e inícielo.
      */
+
     private void startMediaPlayer() {
         if (mMediaPlayer != null) {
             mMediaPlayer.start();
@@ -280,6 +292,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
         giveUpAudioFocus();
     }
 
+
     private void processPlayRequest() {
         if (mState == State.Stopped) {
             Toast.makeText(this, "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG).show();
@@ -314,20 +327,36 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
      * pausado o en play. Si foreGroundOrUpdate, el servicio debe ir al primer plano. más
      * Solo actualiza la notificación.
      */
+
+
     private void buildNotification(boolean startForeground) {
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);
         Bitmap largeIcon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.mipmap.ic_logoradio);
         Notification.MediaStyle style = new Notification.MediaStyle();
 
+
         intent.setAction(ACTION_CLOSE);
         PendingIntent pendingIntent = PendingIntent.getService(getApplicationContext(), 1, intent, 0);
-        Notification.Builder builder = new Notification.Builder(this)
-                .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes'").setContentText("Streaming En Vivo")
-                .setSmallIcon(R.drawable.ic_radio_black_24dp).setOngoing(true)
-                .setLargeIcon(largeIcon)
-                .setContentIntent(getMainContentIntent())
-                .setDeleteIntent(pendingIntent)
-                .setStyle(style);
+        Notification.Builder builder = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(this, "CANAL01" )
+                    .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes'").setContentText("Streaming En Vivo")
+                    .setSmallIcon(R.drawable.logo).setOngoing(true)
+                    .setLargeIcon(largeIcon)
+                    .setBadgeIconType(R.drawable.logoradio)
+                    .setContentIntent(getMainContentIntent())
+                    .setPriority(Notification.PRIORITY_DEFAULT)
+                    .setDeleteIntent(pendingIntent)
+                    .setStyle(style);
+        }else{
+            builder = new Notification.Builder(this)
+                    .setContentTitle("105.3 MHz 'Ntra Sra de Lourdes'").setContentText("Streaming En Vivo")
+                    .setSmallIcon(R.drawable.ic_radio_black_24dp).setOngoing(true)
+                    .setLargeIcon(largeIcon)
+                    .setContentIntent(getMainContentIntent())
+                    .setDeleteIntent(pendingIntent)
+                    .setStyle(style);
+        }
         if (mState == State.Paused || mState == State.Stopped) {
             builder.addAction(generateAction(android.R.drawable.ic_media_play, "Play", ACTION_PLAY));
         } else {
@@ -350,6 +379,7 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
 
 
     }
+
 
     private Notification.Action generateAction(int icon, String title, String intentAction) {
         Intent intent = new Intent(getApplicationContext(), MediaPlayerService.class);

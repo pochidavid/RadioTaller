@@ -1,5 +1,6 @@
 package lourdes8122.radiotaller;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
@@ -261,6 +262,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    
     private void createNotificationChannel() {
         // Crear el canal de notificaciones pero solo para API 26 io superior
         // dado que NotificationChannel es una clase nueva que no está incluida
@@ -271,6 +273,9 @@ public class MainActivity extends AppCompatActivity
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("CANAL01", name, importance);
             channel.setDescription(description);
+            channel.enableVibration(false);
+            channel.enableLights(false);
+            channel.setImportance(NotificationManager.IMPORTANCE_LOW);
             // Registrar el canal en el sistema
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
