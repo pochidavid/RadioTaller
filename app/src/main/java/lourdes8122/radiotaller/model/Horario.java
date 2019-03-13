@@ -71,6 +71,7 @@ public class Horario {
     }
 
     public String getTimeString(){
+
         if(time.getMinutes()==0) return time.getHours()+" hs";
         else return time.getHours()+":"+time.getMinutes()+" hs";
     }

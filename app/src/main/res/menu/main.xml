@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="@string/acerca_de"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/privacy"
+        android:orderInCategory="100"
+        android:title="@string/pol_ticas_privacidad"
+        app:showAsAction="never" />
 </menu>

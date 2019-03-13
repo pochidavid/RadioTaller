@@ -198,6 +198,12 @@ public class MainActivity extends AppCompatActivity
             dialogo_acerca_de mensaje = new dialogo_acerca_de();
             mensaje.show(getSupportFragmentManager(),"aceca de");
         }
+        if (id == R.id.privacy){
+            Uri uri = Uri.parse("http://radiotallerfm.com.ar/privacy/politica_privacidad2019_radiotaller.pdf");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
