@@ -36,7 +36,7 @@ public class EnVivoFragment extends Fragment {
     }
 
     private MediaPlayer player;
-    private String url = "http://giss.tv:8000/santi.ogg";
+    private String url = "http://giss.tv:8000/radiotallerfm.mp3";
     private ToggleButton btnStreaming;
     private TextView radio;
     SharedPreferences myPreferences;

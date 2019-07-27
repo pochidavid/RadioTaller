@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Binder;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.nio.channels.Channel;
 
 import androidx.annotation.RequiresApi;
@@ -144,28 +148,40 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
     }
 
     private void setupMediaPlayer() {
-        if (mMediaPlayer == null) {
-            mMediaPlayer = new MediaPlayer();
-            mMediaPlayer.setOnPreparedListener(this);
-            mMediaPlayer.setOnErrorListener(this);
-            mMediaPlayer.setOnBufferingUpdateListener(this);
-            mMediaPlayer.setOnInfoListener(this);
-            mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            if (mMediaPlayer == null) {
+                mMediaPlayer = new MediaPlayer();
+                mMediaPlayer.setOnPreparedListener(this);
+                mMediaPlayer.setOnErrorListener(this);
+                mMediaPlayer.setOnBufferingUpdateListener(this);
+                mMediaPlayer.setOnInfoListener(this);
+                mMediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+                mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
-            crono = new MiCountDownTimer(10000,1000);
-            crono.start();
+                crono = new MiCountDownTimer(15000, 1000);
+                crono.start();
 
-            try {
-                mMediaPlayer.setDataSource(this, Uri.parse(mStreamUrl));
-            } catch (IOException e) {
-                //Toaster.toast("Error en la conexión. Posible servidor caido");
-                e.printStackTrace();
-                stopSelf();
+                try {
+                    mMediaPlayer.setDataSource(this, Uri.parse(mStreamUrl));
+                } catch (IOException e) {
+                    //Toaster.toast("Error en la conexión. Posible servidor caido");
+                    e.printStackTrace();
+                    stopSelf();
+                }
+
             }
-        }
     }
 
+    public Boolean isOnlineNet() {
+
+        ConnectivityManager cm =
+                (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
+    }
     /**
      * El servicio de transmisión de radio se ejecuta en modo forground para evitar que el sistema operativo Android lo mate.
      * El OnStartCommand se llama cada vez que hay una llamada para iniciar el servicio y el servicio es
@@ -294,13 +310,20 @@ public class MediaPlayerService extends Service implements AudioManager.OnAudioF
 
 
     private void processPlayRequest() {
-        if (mState == State.Stopped) {
-            Toast.makeText(this, "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG).show();
-            sendBufferingIntent();
-            configAndPrepareMediaPlayer();
-        } else if (mState == State.Paused) {
-            requestResources();
-            startMediaPlayer();
+        if(!isOnlineNet()){
+            Toaster.toast("Compruebe su conexión a Internet");
+            sendUpdatePlayerIntent();
+            stopMediaPlayer();
+            close();
+        }else {
+            if (mState == State.Stopped) {
+                Toast.makeText(this, "Conectando con el servidor. Por favor, espere...", Toast.LENGTH_LONG).show();
+                sendBufferingIntent();
+                configAndPrepareMediaPlayer();
+            } else if (mState == State.Paused) {
+                requestResources();
+                startMediaPlayer();
+            }
         }
     }
 
