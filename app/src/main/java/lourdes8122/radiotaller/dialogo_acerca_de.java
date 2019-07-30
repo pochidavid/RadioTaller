@@ -13,7 +13,7 @@ public class dialogo_acerca_de extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedIntanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Acerca de");
-        builder.setMessage("Versión 3.0 ©2019 \n Developers: Alexis Mandracchia - Julian Sanchez - Gisel Casco.");
+        builder.setMessage("Versión 3.3 ©2019 \nDevelopers: Alexis Mandracchia - Julian Sanchez - Gisel Casco.");
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
